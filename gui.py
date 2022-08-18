@@ -1,3 +1,4 @@
+from distutils import text_file
 from PyQt5.QtWidgets import (QMainWindow,
                             QVBoxLayout,
                             QGridLayout,
@@ -6,6 +7,7 @@ from PyQt5.QtWidgets import (QMainWindow,
                             QMenu,
                             QAction,
                             QWidget,
+                            QFileDialog,
                             qApp)
 
 
@@ -32,6 +34,7 @@ class MainWindow(QMainWindow):
 
         open_act = QAction("Open", self)
         open_act.setStatusTip("Open a File. (WIP)")
+        open_act.triggered.connect(self.browsefiles)
         file_menu.addAction(open_act)
 
         exit_act = QAction("Exit", self)
@@ -49,6 +52,14 @@ class MainWindow(QMainWindow):
         text_edit = QPlainTextEdit()
 
         grid = QGridLayout()
-        grid.addWidget(text_edit, 0, 1)
+        grid.addWidget(text_edit, 0, 0)
 
         widget.setLayout(grid)
+
+
+    def browsefiles(self):
+        """method to browse and open a text file to text editor using file explorer"""
+        
+        fname = QFileDialog.getOpenFileName(self, "Open a text file", "C:/")
+        with open(fname[0], "r") as text_file:
+            pass
