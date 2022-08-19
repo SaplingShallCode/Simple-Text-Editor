@@ -2,6 +2,7 @@ from distutils import text_file
 from PyQt5.QtWidgets import (QMainWindow,
                             QVBoxLayout,
                             QGridLayout,
+                            QHBoxLayout,
                             QPlainTextEdit,
                             QPushButton,
                             QMenu,
@@ -9,6 +10,7 @@ from PyQt5.QtWidgets import (QMainWindow,
                             QWidget,
                             QFileDialog,
                             qApp)
+from PyQt5.QtCore import Qt
 
 
 class MainWindow(QMainWindow):
@@ -45,21 +47,56 @@ class MainWindow(QMainWindow):
 
     def InitWidgets(self):
         """method to initialize widgets and layouts"""
-        
+
+# ----- Widgets
+
         widget = QWidget(self)
         self.setCentralWidget(widget)
 
-        text_edit = QPlainTextEdit()
+        self.text_edit = QPlainTextEdit()
+        
+        self.save_button = QPushButton("Save")
+        self.save_button.clicked.connect(self.savefile)
 
-        grid = QGridLayout()
-        grid.addWidget(text_edit, 0, 0)
+        self.save_button.setFixedWidth(100)
 
-        widget.setLayout(grid)
+        self.saveas_button = QPushButton("Save as")
+
+# ----- Layouts
+
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.save_button)
+        hbox.addWidget(self.saveas_button)
+
+
+        main_grid = QGridLayout()
+        main_grid.addWidget(self.text_edit, 0, 0, 1, 3)
+        main_grid.addLayout(hbox, 1, 1)
+
+        widget.setLayout(main_grid)
 
 
     def browsefiles(self):
         """method to browse and open a text file to text editor using file explorer"""
         
-        fname = QFileDialog.getOpenFileName(self, "Open a text file", "C:/")
-        with open(fname[0], "r") as text_file:
-            pass
+        self.fname = QFileDialog.getOpenFileName(self, "Open a text file", "C:/", "Text files (*.txt)")
+
+        try:
+            with open(self.fname[0], "r") as text_file:
+                self.text_edit.setPlainText(text_file.read())
+
+        except FileNotFoundError:
+            return None
+
+
+    def savefile(self):
+        
+        # TODO: prompt user if they want to continue save or not
+
+        try:
+            with open(self.fname[0], "w") as text_file:
+                text = self.text_edit.toPlainText()
+                text_file.write(text)
+
+        except FileNotFoundError:
+            self.setStatusTip("Error: File Not Found.")
