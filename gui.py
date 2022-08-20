@@ -59,12 +59,12 @@ class MainWindow(QMainWindow):
 
         self.text_edit = QPlainTextEdit()
         
-        self.save_button = QPushButton("Save")
+        self.save_button = CustomButton("Save", self)
         self.save_button.clicked.connect(self.savefile)
         self.save_button.setFixedWidth(100)
         self.save_button.setFixedHeight(50)
 
-        self.saveas_button = QPushButton("Save as")
+        self.saveas_button = CustomButton("Save as", self)
         self.saveas_button.setFixedWidth(100)
         self.saveas_button.setFixedHeight(50)
 
@@ -107,7 +107,7 @@ class MainWindow(QMainWindow):
             popup = QMessageBox()
             popup.question(self, "Save File", "Are you sure?", popup.Yes | popup.No, popup.Yes)
             if popup.Yes:
-                
+
                 with open(self.fname[0], "w") as text_file:
                     text = self.text_edit.toPlainText()
                     text_file.write(text)
