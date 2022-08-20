@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (QMainWindow,
                             QFileDialog,
                             qApp)
 from PyQt5.QtCore import Qt
+from buttons import CustomButton
 
 
 class MainWindow(QMainWindow):
@@ -28,6 +29,8 @@ class MainWindow(QMainWindow):
         """method to initialize the window"""
         
         self.setGeometry(700, 100, 500, 700)
+        self.setMinimumSize(500, 700)
+        self.setMaximumSize(1000, 900)
         self.setWindowTitle("Simple Text Editor")
         self.statusBar().showMessage("Hello User :)")
 
@@ -57,10 +60,17 @@ class MainWindow(QMainWindow):
         
         self.save_button = QPushButton("Save")
         self.save_button.clicked.connect(self.savefile)
-
         self.save_button.setFixedWidth(100)
+        self.save_button.setFixedHeight(50)
 
         self.saveas_button = QPushButton("Save as")
+        self.saveas_button.setFixedWidth(100)
+        self.saveas_button.setFixedHeight(50)
+
+# ----- Stylesheet import
+
+        with open("styles/ui.qss", "r") as stylesheet:
+            self.setStyleSheet(stylesheet.read())
 
 # ----- Layouts
 
@@ -68,8 +78,8 @@ class MainWindow(QMainWindow):
         hbox.addWidget(self.save_button)
         hbox.addWidget(self.saveas_button)
 
-
         main_grid = QGridLayout()
+        main_grid.setSpacing(10)
         main_grid.addWidget(self.text_edit, 0, 0, 1, 3)
         main_grid.addLayout(hbox, 1, 1)
 
@@ -90,7 +100,7 @@ class MainWindow(QMainWindow):
 
 
     def savefile(self):
-        
+        pass
         # TODO: prompt user if they want to continue save or not
 
         try:
