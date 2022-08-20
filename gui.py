@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (QMainWindow,
                             QAction,
                             QWidget,
                             QFileDialog,
+                            QMessageBox,
                             qApp)
 from PyQt5.QtCore import Qt
 from buttons import CustomButton
@@ -100,13 +101,19 @@ class MainWindow(QMainWindow):
 
 
     def savefile(self):
-        pass
         # TODO: prompt user if they want to continue save or not
 
         try:
-            with open(self.fname[0], "w") as text_file:
-                text = self.text_edit.toPlainText()
-                text_file.write(text)
+            popup = QMessageBox()
+            popup.question(self, "Save File", "Are you sure?", popup.Yes | popup.No, popup.Yes)
+            if popup.Yes:
+                
+                with open(self.fname[0], "w") as text_file:
+                    text = self.text_edit.toPlainText()
+                    text_file.write(text)
 
         except FileNotFoundError:
             self.setStatusTip("Error: File Not Found.")
+        
+        except AttributeError:
+            self.setStatusTip("Error: No filepath to save to.")
