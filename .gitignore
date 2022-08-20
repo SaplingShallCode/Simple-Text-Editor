@@ -1,2 +1,8 @@
 __pycache__/gui.cpython-39.pyc
 __pycache__/buttons.cpython-39.pyc
+*.manifest
+*.spec
+build/
+dist/
+SimpleTextEditor.exe
+app.png

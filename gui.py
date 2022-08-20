@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         file_menu = menu_bar.addMenu("File")
 
         open_act = QAction("Open", self)
-        open_act.setStatusTip("Open a File. (WIP)")
+        open_act.setStatusTip("Open a File.")
         open_act.triggered.connect(self.browsefiles)
         file_menu.addAction(open_act)
 
@@ -60,13 +60,12 @@ class MainWindow(QMainWindow):
         self.text_edit = QPlainTextEdit()
         
         self.save_button = CustomButton("Save", self)
+        self.save_button.setStatusTip("Save current file")
         self.save_button.clicked.connect(self.savefile)
-        self.save_button.setFixedWidth(100)
-        self.save_button.setFixedHeight(50)
 
         self.saveas_button = CustomButton("Save as", self)
-        self.saveas_button.setFixedWidth(100)
-        self.saveas_button.setFixedHeight(50)
+        self.saveas_button.setStatusTip("Save to a directory")
+        self.saveas_button.clicked.connect(self.savetofile)
 
 # ----- Stylesheet import
 
@@ -101,7 +100,7 @@ class MainWindow(QMainWindow):
 
 
     def savefile(self):
-        # TODO: prompt user if they want to continue save or not
+        """method to write to opened file"""
 
         try:
             popup = QMessageBox()
@@ -112,8 +111,21 @@ class MainWindow(QMainWindow):
                     text = self.text_edit.toPlainText()
                     text_file.write(text)
 
+                    self.setStatusTip("File saved.")
+
         except FileNotFoundError:
             self.setStatusTip("Error: File Not Found.")
         
         except AttributeError:
             self.setStatusTip("Error: No filepath to save to.")
+
+
+    def savetofile(self):
+        """method to save current text to a specified file path"""
+
+        self.fname = QFileDialog.getSaveFileName(self, "Save as", "C:/", "Text files (*.txt)")
+        with open(f"{self.fname[0]}", "w") as text_file:
+            text = self.text_edit.toPlainText()
+            text_file.write(text)
+
+            self.setStatusTip("File saved.")
