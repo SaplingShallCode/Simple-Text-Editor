@@ -21,6 +21,8 @@ class MainWindow(QMainWindow):
 
         super().__init__()
 
+        self.fname = None
+
         self.InitWindow()
         self.InitWidgets()
         self.show()
@@ -61,6 +63,8 @@ class MainWindow(QMainWindow):
         
         self.save_button = CustomButton("Save", self)
         self.save_button.setStatusTip("Save current file")
+        if self.fname == None:
+            self.save_button.setEnabled(False)
         self.save_button.clicked.connect(self.savefile)
 
         self.saveas_button = CustomButton("Save as", self)
@@ -94,6 +98,7 @@ class MainWindow(QMainWindow):
         try:
             with open(self.fname[0], "r") as text_file:
                 self.text_edit.setPlainText(text_file.read())
+                self.save_button.setEnabled(True)
 
         except FileNotFoundError:
             return None
@@ -104,14 +109,18 @@ class MainWindow(QMainWindow):
 
         try:
             popup = QMessageBox()
-            popup.question(self, "Save File", "Are you sure?", popup.Yes | popup.No, popup.Yes)
-            if popup.Yes:
+            popup_choice = popup.question(self, "Save File", "Are you sure?", popup.Yes | popup.No, popup.Yes)
+            
+            if popup_choice == popup.Yes:
 
                 with open(self.fname[0], "w") as text_file:
                     text = self.text_edit.toPlainText()
                     text_file.write(text)
 
                     self.setStatusTip("File saved.")
+            elif popup_choice == popup.No:
+                self.setStatusTip("Nothing Happened.")
+
 
         except FileNotFoundError:
             self.setStatusTip("Error: File Not Found.")

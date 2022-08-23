@@ -25,4 +25,8 @@ CustomButton:pressed {
     border-right: 1px solid #766659;
     border-top: 5px solid #8e7a6b;
 }
+CustomButton:disabled {
+    background-color: #8e7a6b;
+    border: #8e7a6b;
+}
 /* TODO: Find a font that looks good for UI*/
