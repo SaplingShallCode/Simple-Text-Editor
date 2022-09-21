@@ -1,16 +1,18 @@
 from distutils import text_file
-from PyQt5.QtWidgets import (QMainWindow,
-                            QVBoxLayout,
-                            QGridLayout,
-                            QHBoxLayout,
-                            QPlainTextEdit,
-                            QPushButton,
-                            QMenu,
-                            QAction,
-                            QWidget,
-                            QFileDialog,
-                            QMessageBox,
-                            qApp)
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QVBoxLayout,
+    QGridLayout,
+    QHBoxLayout,
+    QPlainTextEdit,
+    QPushButton,
+    QMenu,
+    QAction,
+    QWidget,
+    QFileDialog,
+    QMessageBox,
+    qApp
+    )
 from PyQt5.QtCore import Qt
 from buttons import CustomButton
 
