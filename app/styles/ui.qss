@@ -1,31 +1,31 @@
 QMainWindow {
     background-color: #AC7088;
 }
-QPlainTextEdit {
+QTextEdit {
     background-color: #F5E8C7;
     border: none;
     border-radius: 4px;
     border-bottom: 5px solid #ddd1b3;
 }
-CustomButton {
+QPushButton {
     background-color: #ECCCB2;
-    color: black;
     border: none;
     border-left: 1px solid #bda38e;
     border-right: 1px solid #bda38e;
     border-bottom: 5px solid #bda38e;
+    color: black;
 }
-CustomButton:hover {
+QPushButton:hover {
     background-color: #d4b8a0;
 }
-CustomButton:pressed {
+QPushButton:pressed {
     background-color: #766659;
     border: none;
     border-left: 1px solid #766659;
     border-right: 1px solid #766659;
     border-top: 5px solid #8e7a6b;
 }
-CustomButton:disabled {
+QPushButton:disabled {
     background-color: #8e7a6b;
     border: #8e7a6b;
 }
