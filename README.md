@@ -1,4 +1,4 @@
 # Simple Text Editor
-a simple editor for txt files made with **PyQt5**.  
+a simple editor for .txt format made with **PyQt5**.  
 
-![app](app.png)  
+![Screenshot](img/screenshot.png)
