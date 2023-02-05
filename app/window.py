@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
 
         super().__init__()
 
-        self.fname = None
+        self.file_name = None
 
         self.InitStyle()
         self.InitWindow()
@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
 
         open_act = QAction("Open", self)
         open_act.setStatusTip("Open a File.")
-        open_act.triggered.connect(self.browse_files)
+        open_act.triggered.connect(self.open_file)
         file_menu.addAction(open_act)
 
         exit_act = QAction("Exit", self)
@@ -71,9 +71,8 @@ class MainWindow(QMainWindow):
 
         self.save_button = QPushButton("Save", self)
         self.save_button.setStatusTip("Save current file")
-        if self.fname == None:
-            self.save_button.setEnabled(False)
-        self.save_button.clicked.connect(self.save_file)
+        self.save_button.setEnabled(False)
+        self.save_button.clicked.connect(self.save_opened_file)
         row_2.addWidget(self.save_button)
 
         self.save_as_button = QPushButton("Save as", self)
@@ -87,34 +86,34 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
 
 
-    def browse_files(self):
-        """method to browse and open a text file to text editor using file explorer"""
+    def open_file(self):
+        """
+            browse and open txt file to text editor using file explorer.
+        """
         
-        self.fname = QFileDialog.getOpenFileName(self, "Open a text file", "C:/", "Text files (*.txt)")
-
         try:
-            with open(self.fname[0], "r") as text_file:
+            self.file_name = QFileDialog.getOpenFileName(self, "Open a text file", "C:/", "Text files (*.txt)")
+            with open(self.file_name[0], "r") as text_file:
                 self.text_edit.setPlainText(text_file.read())
                 self.save_button.setEnabled(True)
 
         except FileNotFoundError:
             return None
+        
 
 
-    def save_file(self):
-        """method to write to opened file"""
+    def save_opened_file(self):
+        """Save when opened a file"""
 
         try:
             popup = QMessageBox()
             popup_choice = popup.question(self, "Save File", "Are you sure?", popup.Yes | popup.No, popup.Yes)
-            
             if popup_choice == popup.Yes:
-
-                with open(self.fname[0], "w") as text_file:
+                with open(self.file_name[0], "w") as text_file:
                     text = self.text_edit.toPlainText()
                     text_file.write(text)
-
                     self.setStatusTip("File saved.")
+
             elif popup_choice == popup.No:
                 self.setStatusTip("Nothing Happened.")
 
@@ -127,11 +126,15 @@ class MainWindow(QMainWindow):
 
 
     def save_to_file(self):
-        """method to save current text to a specified file path"""
+        """save current text to a specified file path"""
 
-        self.fname = QFileDialog.getSave_FileName(self, "Save as", "C:/", "Text files (*.txt)")
-        with open(f"{self.fname[0]}", "w") as text_file:
-            text = self.text_edit.toPlainText()
-            text_file.write(text)
+        try: 
+            self.file_name = QFileDialog.getSaveFileName(self, "Save as", "C:/", "Text files (*.txt)")
+            with open(f"{self.file_name[0]}", "w") as text_file:
+                text = self.text_edit.toPlainText()
+                text_file.write(text)
+                self.save_button.setEnabled(True)
+                self.setStatusTip("File saved.")
 
-            self.setStatusTip("File saved.")
+        except FileNotFoundError:
+            return None
