@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import (
     qApp
     )
 from PyQt5.QtCore import Qt
-from buttons import CustomButton
+from app.widgets import CustomButton
 
 
 class MainWindow(QMainWindow):
