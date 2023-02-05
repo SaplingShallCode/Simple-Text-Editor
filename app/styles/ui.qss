@@ -1,32 +1,51 @@
 QMainWindow {
-    background-color: #AC7088;
+    background-color: #404258;
+   
 }
+
+QMenu {
+    background-color: #404258;
+    color: #fff;
+}
+QMenu::item:selected {
+    background-color: #8c8e9b;
+}
+
+QMenuBar {
+    background-color: #404258;
+    color: #fff;
+}
+QMenuBar::item:selected {
+    background-color: #8c8e9b;
+}
+
+QStatusBar {
+    background-color: #404258;
+    color: #fff;
+}
+
 QTextEdit {
-    background-color: #F5E8C7;
+    background-color: #474E68;
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    border-bottom: 5px solid #ddd1b3;
+    font-size: 18px; 
 }
+
 QPushButton {
-    background-color: #ECCCB2;
+    background-color: #50577A;
     border: none;
-    border-left: 1px solid #bda38e;
-    border-right: 1px solid #bda38e;
-    border-bottom: 5px solid #bda38e;
-    color: black;
+    padding: 7%;
 }
+
 QPushButton:hover {
-    background-color: #d4b8a0;
+    background-color: #969aaf;
 }
+
 QPushButton:pressed {
-    background-color: #766659;
-    border: none;
-    border-left: 1px solid #766659;
-    border-right: 1px solid #766659;
-    border-top: 5px solid #8e7a6b;
+    background-color: #404662;
 }
+
 QPushButton:disabled {
-    background-color: #8e7a6b;
-    border: #8e7a6b;
+    background-color: #303449;
+    color: #404662;
 }
-/* TODO: Find a font that looks good for UI*/
