@@ -1,3 +1,4 @@
+from app.variables import *
 from PyQt5.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
@@ -33,9 +34,8 @@ class MainWindow(QMainWindow):
 
     def InitWindow(self):
         """Initialize window properties."""
-        self.setGeometry(700, 100, 500, 700)
-        self.setMinimumSize(500, 700)
-        self.setMaximumSize(1000, 900)
+
+        self.setMinimumSize(MIN_WIDTH, MIN_HEIGHT)
         self.setWindowTitle("Simple Text Editor")
         self.statusBar().showMessage("Hello User :)")
 
@@ -74,13 +74,13 @@ class MainWindow(QMainWindow):
         if self.fname == None:
             self.save_button.setEnabled(False)
         self.save_button.clicked.connect(self.save_file)
-
-        self.saveas_button = QPushButton("Save as", self)
-        self.saveas_button.setStatusTip("Save to a directory")
-        self.saveas_button.clicked.connect(self.save_to_file)
-        
         row_2.addWidget(self.save_button)
-        row_2.addWidget(self.saveas_button)
+
+        self.save_as_button = QPushButton("Save as", self)
+        self.save_as_button.setStatusTip("Save to a directory")
+        self.save_as_button.clicked.connect(self.save_to_file)
+        
+        row_2.addWidget(self.save_as_button)
         main_layout.addLayout(row_2)
 
         # --- main layout setup
